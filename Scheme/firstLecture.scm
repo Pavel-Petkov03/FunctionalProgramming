@@ -58,7 +58,7 @@ larger numbers.
                       (when(>= amount 5) (+ iter (calculate-all-ways-of-coins-iter (- amount 5) (+ iter 1))))
                       (when (>= amount 1) (+ iter (calculate-all-ways-of-coins-iter (- amount 1) (+ iter 1))))
                       iter
-                      )) ;; going yo fix tomorrow ;)
+                      )) ;; going to fix tomorrow ;)
         iter
         )
   (calculate-all-ways-of-coins-iter amount 0)
