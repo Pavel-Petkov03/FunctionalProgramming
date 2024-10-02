@@ -33,7 +33,7 @@ larger numbers.
   )
 
 
-(define epsilon 0.0001)
+(define epsilon 0.0000000000000001) ;; if epsilon is closer to zero the calculation is more accurate but slower
 (define (approximation-good? guess x)
    (< (abs (- (square guess) x) ) epsilon) ;; this returns predicate(the ? is used for predicate declaration it is just conventional)
  )
@@ -45,10 +45,21 @@ larger numbers.
       (sqrt-wrapper (calculate-next guess x) x)
       )
  )
-(define (sqrt x) (sqrt-wrapper 1.0 x))
+(define (sqrt x) (sqrt-wrapper 1.0 x)) ;; when have recursion with params we create wrapper  to avoid passing stupid data in the outer function(the same is in cpp)
 
 
-
-
-
-
+(define (calculate-all-ways-of-coins amount)
+  (define (calculate-all-ways-of-coins-iter amount iter)
+    (if (> amount 0)
+        (+ iter (begin ( when (>= amount 100) (+ iter (calculate-all-ways-of-coins-iter (- amount 100) (+ iter 1))))
+                      (when (>= amount 50) (+ iter (calculate-all-ways-of-coins-iter (- amount 50) (+ iter 1)))))
+                      (when(>= amount 20) (+ iter (calculate-all-ways-of-coins-iter (- amount 20) (+ iter 1))))
+                      (when(>= amount 10) (+ iter (calculate-all-ways-of-coins-iter (- amount 10) (+ iter 1))))
+                      (when(>= amount 5) (+ iter (calculate-all-ways-of-coins-iter (- amount 5) (+ iter 1))))
+                      (when (>= amount 1) (+ iter (calculate-all-ways-of-coins-iter (- amount 1) (+ iter 1))))
+                      iter
+                      )) ;; going yo fix tomorrow ;)
+        iter
+        )
+  (calculate-all-ways-of-coins-iter amount 0)
+    )
