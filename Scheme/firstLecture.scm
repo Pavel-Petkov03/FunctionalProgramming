@@ -33,4 +33,22 @@ larger numbers.
   )
 
 
+(define epsilon 0.0001)
+(define (approximation-good? guess x)
+   (< (abs (- (square guess) x) ) epsilon) ;; this returns predicate(the ? is used for predicate declaration it is just conventional)
+ )
+(define (average x y) (/ (+ x y) 2))
+(define (calculate-next guess x) (average (/ x guess) guess))
+(define (sqrt-wrapper guess x) ;; used as wrapper only
+  (if (approximation-good? guess x )
+      guess
+      (sqrt-wrapper (calculate-next guess x) x)
+      )
+ )
+(define (sqrt x) (sqrt-wrapper 1.0 x))
+
+
+
+
+
 
