@@ -48,18 +48,25 @@ larger numbers.
 (define (sqrt x) (sqrt-wrapper 1.0 x)) ;; when have recursion with params we create wrapper  to avoid passing stupid data in the outer function(the same is in cpp)
 
 
-(define (calculate-all-ways-of-coins amount)
-  (define (calculate-all-ways-of-coins-iter amount iter)
-    (if (> amount 0)
-        (+ iter (begin ( when (>= amount 100) (+ iter (calculate-all-ways-of-coins-iter (- amount 100) (+ iter 1))))
-                      (when (>= amount 50) (+ iter (calculate-all-ways-of-coins-iter (- amount 50) (+ iter 1)))))
-                      (when(>= amount 20) (+ iter (calculate-all-ways-of-coins-iter (- amount 20) (+ iter 1))))
-                      (when(>= amount 10) (+ iter (calculate-all-ways-of-coins-iter (- amount 10) (+ iter 1))))
-                      (when(>= amount 5) (+ iter (calculate-all-ways-of-coins-iter (- amount 5) (+ iter 1))))
-                      (when (>= amount 1) (+ iter (calculate-all-ways-of-coins-iter (- amount 1) (+ iter 1))))
-                      iter
-                      )) ;; going to fix tomorrow ;)
-        iter
+ 
+(define (coin-calculator amount)
+  (define (coin-calculator-wrapper amount iter)
+    (if (= amount 0)
+        (+ iter 1)
+        (begin (when (>= amount 100) (set! iter (coin-calculator-wrapper (- amount 100) iter)))
+               (when (>= amount 50) (set!  iter (coin-calculator-wrapper (- amount 50) iter)))
+               (when (>= amount 20) (set!  iter (coin-calculator-wrapper (- amount 20) iter)))
+               (when (>= amount 10) (set!  iter (coin-calculator-wrapper (- amount 10) iter)))
+               (when (>= amount 5) (set!  iter (coin-calculator-wrapper (- amount 5) iter)))
+               (when (>= amount 1) (set!  iter (coin-calculator-wrapper (- amount 1) iter)))
+               iter
         )
-  (calculate-all-ways-of-coins-iter amount 0)
     )
+    
+)(coin-calculator-wrapper amount 0)
+  )
+
+
+
+
+
