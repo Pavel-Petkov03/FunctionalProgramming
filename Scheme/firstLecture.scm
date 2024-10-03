@@ -65,6 +65,18 @@ larger numbers.
     
 )(coin-calculator-wrapper amount 0)
   )
+(define (reminder first second)
+  (begin (define int-div (quotient first second)) (define res (* int-div second)) (- first res ))
+ )
+  
+(define (gcd first second)
+  (if (= second 0) first
+      (gcd second (reminder first second))
+      )
+  )
+
+
+
 
 
 
