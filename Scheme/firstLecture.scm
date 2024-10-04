@@ -74,8 +74,12 @@ larger numbers.
       (gcd second (reminder first second))
       )
   )
-
-
+(define (root-approximator x y) ())
+(define (cubic-root-approximation value)
+  (define (cubic-root-approximation-recurse current guess)
+    (if (approximation-good? current guess) ) (root-approximator current guess)
+    )
+  )
 
 
 
