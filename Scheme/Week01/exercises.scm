@@ -38,5 +38,7 @@
   (begin (define int-div (quotient first second)) (define res (* int-div second)) (- first res ))
  )
 
-
+(define (convert-from-base-10-to-base-k base-k n)
+  (if (= n 0) "" (string-append (convert-from-base-10-to-base-k base-k (floor (/ n base-k))) (number->string (reminder n base-k)))) ; backa ;)
+  )
 
