@@ -34,3 +34,9 @@
   (count-digits-wrapper number 0)
   )
 
+(define (reminder first second)
+  (begin (define int-div (quotient first second)) (define res (* int-div second)) (- first res ))
+ )
+
+
+
