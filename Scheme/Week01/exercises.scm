@@ -66,17 +66,14 @@
 )
 
 (define (iterative-fib n)
-  (define (iterative-fib-wrapper n acc)
-    (cond ((= n 0) 0)
-          ((= n 1) 1)
-          (else (+( iterative-fib-wrapper (- n 1) acc)
-                  (iterative-fib-wrapper (- n 2) acc)
-                  )
-                )
-          )
+  (define (iterative-fib-wrapper n acc1 acc2)
+    (if (= n 0) acc2
+               (iterative-fib-wrapper (- n 1) acc2 (+ acc1 acc2))
+        )
     )
-  (iterative-fib-wrapper n 0)
-  )
+  (iterative-fib-wrapper n 0 1)
+)
+
 
 
 
