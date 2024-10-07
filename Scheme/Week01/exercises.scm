@@ -41,4 +41,17 @@
 (define (convert-from-base-10-to-base-k base-k n)
   (if (= n 0) "" (string-append (convert-from-base-10-to-base-k base-k (floor (/ n base-k))) (number->string (reminder n base-k)))) ; backa ;)
   )
-
+(define (is-palindrome? str)
+  (begin (define len (string-length str))
+         (cond
+           ((= len 1) #t)
+           ((= len 0) #t)
+           (else (and  (= (char->integer(string-ref str 0))
+                     (char->integer(string-ref str (- (string-length str) 1)))
+                   )
+                 (is-palindrome? (substring str 1 (- len 1)))
+                 
+            ))
+           )
+        )
+  )
