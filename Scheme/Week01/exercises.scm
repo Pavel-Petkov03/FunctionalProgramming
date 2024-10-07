@@ -55,3 +55,28 @@
            )
         )
   )
+
+
+
+(define (iterative-fact n)
+  (define (iteratrive-fact-wrapper n acc)
+    (if (= n 0) acc (iteratrive-fact-wrapper (- n 1) (* acc n)))
+   )
+  (iteratrive-fact-wrapper n 1)
+)
+
+(define (iterative-fib n)
+  (define (iterative-fib-wrapper n acc)
+    (cond ((= n 0) 0)
+          ((= n 1) 1)
+          (else (+( iterative-fib-wrapper (- n 1) acc)
+                  (iterative-fib-wrapper (- n 2) acc)
+                  )
+                )
+          )
+    )
+  (iterative-fib-wrapper n 0)
+  )
+
+
+
