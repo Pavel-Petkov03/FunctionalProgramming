@@ -74,6 +74,44 @@
   (iterative-fib-wrapper n 0 1)
 )
 
+(define (succ n) (+ n 1))
+
+(define (pred n)
+  (define (pred-wrapper n current)
+   (if (= n (succ current))
+       current
+       (pred-wrapper n (succ current))
+   )
+  )
+  (pred-wrapper n 0)
+)
+(define (add a b) 
+         (define (add-wrapper a b)
+          (if (= (pred b) 0)
+                a
+               (add-wrapper (succ a) (pred b))
+        )
+    )
+  (succ (add-wrapper a b))
+)
+
+(define (multiply a b)
+  (define (multiply-wrapper a b acc)
+    (if (= 0 (pred b))
+        acc
+        (multiply-wrapper a (pred b) (add acc a))
+               
+        )
+    )
+  (add (multiply-wrapper a b 0) a)
+  )
+
+(define (my-fact n)
+  (if (= n 0)
+      1
+      (multiply n (my-fact (pred n)))
+      )
+  )
 
 
 
