@@ -17,4 +17,25 @@
     (if (= number 0) accumulator (sum-digits-wrapper (floor (/ number 10)) (+ accumulator (reminder number 10))))
     )
   (sum-digits-wrapper number 0)
-  ) 
+  )
+
+
+(define (count-devisors n)
+  (define (count-devisors-iter n current accumulator)
+    (if (= current 0)
+        accumulator
+        (count-devisors-iter n
+                             (- current 1)
+                             (if (= (reminder n current) 0 )
+                                 (+ accumulator 1)
+                                 accumulator
+                                 )
+                             )
+        )
+    )
+  (count-devisors-iter n n 0) ; bih optimiziral do koren ama iskat i 1 i n
+  )
+
+
+(define (isPrime? num) (= (count-devisors num) 2))
+
