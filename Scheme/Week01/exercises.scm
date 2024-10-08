@@ -114,4 +114,28 @@
   )
 
 
+(define (my-fib n)
+  (cond ((= n 0) 0)
+         ((= n 1) 1)
+         
+          (else ( + (my-fib (pred n)) (my-fib (pred (pred n)))))
+                 )
+  )
+
+(define (is-even? num) (= (reminder num 2) 0))
+(define (save-div a)
+  (if (is-even? a) (/ a 2) (/ (- a 1) 2)))
+
+
+(define (calculator op-num a b)
+  (cons ((= op-num 1) (add a b))
+        ((= op-num 2) (multiply a b))
+        ((= op-num 3) (my-fact a))
+        ((= op-num 4) (save-div a b))
+        ((= op-num 5) (my-fib a))
+        ((= op-num 6) (pred a))
+        ((= op-num 7) (succ a b)) ; малко е зле това защото оставяме вторият операнд да е dummy  ама все тая
+        )
+  )
+
 
