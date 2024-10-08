@@ -37,5 +37,18 @@
   )
 
 
-(define (isPrime? num) (= (count-devisors num) 2))
+(define (tup-prime? num) (= (count-devisors num) 2)) ; ako si baven se pishe tova (1 ne e prime)
+
+(define (umen-prime? num)
+  (define (umen-prime-inner number iter)
+    (if (> iter (sqrt number))
+        #t
+        (if ( = (reminder number iter) 0 )
+            #f
+            (umen-prime-inner number (+ iter 1))
+        )
+     )
+    )
+  (umen-prime-inner num 2)
+  )
 
