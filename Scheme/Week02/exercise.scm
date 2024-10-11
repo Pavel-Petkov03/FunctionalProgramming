@@ -33,72 +33,43 @@
                              )
         )
     )
-  (count-devisors-iter n n 0) ; bih optimiziral do koren ama iskat i 1 i n
+  (count-devisors-iter n n 0)
   )
 
 
 (define (tup-prime? num) (= (count-devisors num) 2)) ; ako si baven se pishe tova (1 ne e prime)
 
-(define (umen-prime? num)
-  (define (umen-prime-inner number iter)
-    (if (> iter (sqrt number))
+(define ( num)
+  (define (umen-prime-inner number iter root)
+    (if (> iter root)
         #t
         (if ( = (reminder number iter) 0 )
             #f
-            (umen-prime-inner number (+ iter 1))
+            (umen-prime-inner number (+ iter 1) root)
         )
      )
     )
-  (umen-prime-inner num 2)
+  (umen-prime-inner num 2 (sqrt num))
   )
 
-
-
-
-
-
-
-
-
-; seminar
-
-(define (custom-fact n)
-  (if (< n 0)
-      "Cannot find fact with negative number"
-      (if (= n 0)
-      1
-      (* n (custom-fact (- n 1)))
-       )
+(define (get-number-len number)
+  (define (get-number-len-wrapper number)
+  (if (= number 0)
+      0
+      (+ 1 (get-number-len-wrapper (quotient number 10)))
       )
   )
- 
-(define add +)
-
-
-(define (count-digits n)
-  (define (count-digits-recurse n iter)
-    (if (= n 0)
-        iter
-        (count-digits-recurse (quotient n 10) (+ iter 1)) ; tail rec
-        )
-    )
-  (if (= n 0)
+  (if (= number 0)
       1
-      (count-digits n 0)
+      (get-number-len-wrapper number)
       )
-  )
+)
 
 
-(define (list-sum arr)
-  (define (list-sum-inner arr iter)
-    (if (null? arr)
-        iter
-        (list-sum-inner (cdr arr) (+ iter (car arr))) ; cdr -> takes everything except for the first element
-                                                      ; car -> takes the first element
-        )
-    )
-  (list-sum-inner arr 0)
-  )
+
+
+
+
 
 
 
