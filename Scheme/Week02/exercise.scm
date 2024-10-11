@@ -2,7 +2,7 @@
 
 (define (reminder first second)
   (begin (define int-div (quotient first second)) (define res (* int-div second)) (- first res ))
- ) ; this will be copied because I am too lazy to write it every time
+ ) ; this will be copied because I am too lazy to write it every time(okaza se che se pishelo remainder i go ima ama shte ostavq taq funkciq vse pak)
 
 (define (sum-digits-recurse number) ; uses stack (no tail recursion)
   (if (= number 0)
@@ -126,4 +126,24 @@
   )
 
 
+(define (binary-to-decimal number)
+  (define (binary-to-decimal-wrapper current-number accumulator current-power)
+    (if (= current-number 0)
+        accumulator
+        (binary-to-decimal-wrapper (quotient current-number 10)
+                                   ( + accumulator (* (expt 2 current-power) (remainder current-number 10)))
+                                   (+ current-power 1)
+                                   )
+        )
+    )
+  (binary-to-decimal-wrapper number 0 0)
+  )
+
+(define (decimal-to-binary number)
+    (if (= number 0)
+        ""
+        (string-append (decimal-to-binary (quotient number 2)) (number->string(remainder number 2)))
+       )
+)
+  
 
