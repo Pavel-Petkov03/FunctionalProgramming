@@ -15,20 +15,6 @@
       )
   ))
 
-(define (get-roman-char number)
-  (cond  ((= number 1000) "M")
-         ((= number 900) "D")
-           ((= number 500) "D")
-           ((= number 400) "D")
-           ((= number 100) "C")
-           ((= number 50) "L")
-           ((= number 500) "D")
-           ((= number 10) "X")
-           ((= number 5 ) "V")
-           ((= number 1 ) "I")
-           (else "Invalid input")
-   )
-  )
 
 (define (number-to-roman number)
   (if (= number 0)
@@ -48,8 +34,26 @@
              ((>= number 1) (string-append "I" (number-to-roman (- number 1))))
    )
       )
-  
   )
+
+
+(define (mirror? number)
+  (define (mirror-wrapper str len)
+        (if (or (= len 0) (= len 1))
+            #t
+            (and (eq? (string-ref str 0) (string-ref str (- len 1)))
+                 (mirror-wrapper (substring str 1 (- len 1)) (- len 2))
+                 )
+             )
+            )
+  (let (
+         (str (number->string number))
+      )
+        (mirror-wrapper str (string-length str))
+      )
+        )
+    
+
 
 
 
