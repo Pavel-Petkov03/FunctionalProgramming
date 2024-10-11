@@ -99,9 +99,31 @@
         (else
          (ends-with-inner? n k)
          )
-      
   )
 )
+
+(define (sum-divisors n)
+  (define (sum-divisors-iter accumulator  i)
+    (if (> i n)
+        accumulator
+        (if (= (remainder n i) 0 )
+            (sum-divisors-iter (+ accumulator i) (+ i 1))
+            (sum-divisors-iter accumulator (+ i 1))
+        
+        )
+       )
+    )
+  ( + (sum-divisors-iter 0 2) 1)
+  )
+
+
+(define (automorphic? num)
+  (ends-with? num (* num num))
+  )
+
+(define (perfect? num)
+  (= num (- (sum-divisors num) num))
+  )
 
 
 
