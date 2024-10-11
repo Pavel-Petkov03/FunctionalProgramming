@@ -69,13 +69,39 @@
 
 
 
+(define (increasing-digits? number)
+  (increasing-digits-wrapper number 9) ; 9 zashoto e nai golqmata cifra
+  )
+(define (increasing-digits-wrapper number current-max-digit)
+  (cond
+    ((<= current-max-digit (remainder number 10)) #f)
+    ((= number 0) #t)
+    (else 
+     (increasing-digits-wrapper (quotient number 10) (remainder number 10)))
+    )
+  ) ;; tui kato sme umni se seshtame da gledame decreasing otdqsno nalqvo zashtoto e the same ;)
+
+
+(define (ends-with-inner? n k)
+  (if (or (= n 0) (= k 0))
+      #t
+      (and (= (remainder n 10) (remainder k 10))
+           (ends-with-inner? (quotient n 10) (quotient k 10))
+           )
+      )
+  )
 
 
 
-
-
-
-
+(define (ends-with? n k)
+  (cond ((and (= n 0)(= k 0))  #t)
+        ((or (= n 0) (= k 0) #f))
+        (else
+         (ends-with-inner? n k)
+         )
+      
+  )
+)
 
 
 
