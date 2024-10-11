@@ -52,10 +52,21 @@
         (mirror-wrapper str (string-length str))
       )
         )
-    
 
 
+(define (help-students x y)
+  (cond ( (and (= x 0) (= y 0)) "Center")
+        (  (= x 0)  "Ordinate")
+        (  (= y 0)  "Abscisa")
+        ( (and (> x 0) (> y 0)) "1 Quadrant")
+        ( (and (< x 0) (> y 0)) "2 Quadrant")
+        ( (and (< x 0) (< y 0)) "3 Quadrant")
+        ( (and (> x 0) (< y 0)) "4 Quadrant")
+    )
+  )
 
+
+; надолу задачите са if else и няма много смисъл да ги пиша
 
 
 
