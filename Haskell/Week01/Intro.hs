@@ -14,6 +14,7 @@
 {-# OPTIONS_GHC -fwarn-unused-matches #-}
 
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+import Graphics.Win32 (equalRgn)
 -- disable some hints that spoil the easy tasks
 {-# HLINT ignore "Use even" #-}
 
@@ -25,4 +26,36 @@ fact 0 = 1
 fact n = n * fact (n - 1)
 
 
--- >>> fact 1
+
+data RPS = Rock | Paper | Scissors
+  deriving (Show)
+beats :: RPS -> RPS -> Bool
+beats = undefined
+
+
+data Point = MyPoint Integer Integer
+    deriving (Show)
+
+defaultPoint :: Point
+defaultPoint = MyPoint 0 0
+
+
+next :: RPS -> RPS
+next Rock = Paper
+next Paper = Scissors
+next Scissors = Rock
+
+describeTuple :: (RPS, RPS) -> Bool
+describeTuple pair = case pair of
+    (Scissors, Scissors) -> True
+    (Rock , Rock) -> True
+    (Paper , Paper) -> True
+    _ -> False
+
+
+
+ 
+
+
+
+
