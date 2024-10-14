@@ -72,22 +72,16 @@
       
           (if  (= number-len current-index)
              (sort-n-iter n (+ 1 iter) result number-len current-power 1)
-             (begin
-               (display new-n )
-               (display " ")
-               (display number-len)
-               (sort-n-iter new-n
+             
+              (sort-n-iter new-n
                             iter
                             new-result
-                            (if (= (- number-len 1) current-index)
-                                                      (- number-len consec-counter)
-                                                      number-len
-                                                      )
+                            (get-number-len new-n)
                             
                             (- current-power 1)
                             (+ consec-counter 1)
                             )
-               )
+               
                
              
           )
