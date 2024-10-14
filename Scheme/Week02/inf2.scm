@@ -60,11 +60,24 @@
   )
 
 
-(define (sort-n-iter n iter result)
-  (if (= iter 0)
-      (sort-n-iter (remove-zeroes n) (+ iter 1) )
+(define (sort-n-iter n iter result number-len)
+  (if (= n 0)
+      result
+      (let*
+         {
+          [current-index (get-number-index n iter)]
+          [new-n (- n (* (expt 10 current-index) iter))]
+          [new-result (+ result (* (expt 10 (- number-len iter)) iter))]
+          }
+         (if (= number-len current-index)
+             (sort-n-iter n (+ 1 iter) result number-len)
+             (sort-n-iter new-n iter new-result number-len)
+             )
+         )
       )
-  )
+)
+  
+  
 (define (sort-n n) ; ясно е че counting-sort e the best ама не мога да го използвам
                    ;защото нямам право на масиви а няма да вкарам 10 променливи
                    ; затова просто ще взимам индекса на най - голямото число ще го изваждам докато не стане n 0 и ще пълня друго число
