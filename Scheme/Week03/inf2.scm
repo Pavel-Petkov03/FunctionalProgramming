@@ -38,12 +38,48 @@
                                                         ;вкарам гръцка клавиатура 
   )
 
-(define (apply-n func n)
-  (lambda (accumulator)
-    (if (= n 0)
-        accumulator
-        (apply-n func (- n 1))
+(define (apply-n func iter)
+  (lambda (x)
+    (if (= iter 0)
+        x
+        ((apply-n func (- iter 1)) (func x)) ; правиш function call na
+                                          ;apply-n и връща funcRef който се callва във (f x )
+                                          ; явно е имало смислена функция с аргументи която прави
+                                          ; рекурсивна lambda
+                                          ; явно closure-а тук е по силен от този на js
+                                          ;защото там това става само със смяна на среда (bind)
         )
     )
   )
+
+
+; същите функции от exercise.lcm () (не ги импортвам защото не може да се импортне конкретна функция а цял файл :( )
+(define (accumulate op nv a b term next)
+    (if (> a b) nv
+        (op (term a) (accumulate op nv (next a) b term next))))
+
+(define (accumulate-i op nv a b term next)
+    (if (> a b) nv
+        (accumulate-i op (op nv (term a)) (next a) b term next)))
+
+
+(define (cool-expression num)
+  (accumulate-i + 0 2 num (lambda (x) (expt x 3)) (lambda (x) (+ x 3)))
+  )
+
+(define (factoriel n)
+  (accumulate-i * 1 0 n (lambda (x) (if (= x 0) 1 x)) (lambda (x) (+ x 1))) ; tova e cursed
+  )
+
+(define (logical-or a b)
+  (or a b) ; тъй като or е специална форма не може да се подава като func ptr( wtf)
+  )
+
+(define (prime? num)
+  (not (accumulate logical-or #f 2 (- num 1) (lambda (x) (= (remainder num x) 0)) (lambda (x) (+ x 1))))
+  ; може да се напише като return само на accumualte без not отпред по закон на Де-Морган
+  ; просто трябва да се махне not отпред да се сложи logical-and #t  вместо #t  и not  във първата ламбда
+  
+  )
+
 
