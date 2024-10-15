@@ -102,6 +102,31 @@
                   ; ще помисля как да го оптимизирам използвайки accumulate
                   ; биг подавал pairs (k v) ама не се учи в тая лекция така че го зарязвам така
   );
+
+
+(define (in-range? current a b)
+  (and (>= current a) (<= current b))
+  )
+
+
+(define (count-pairs a b sum)
+  (+ (if (= (remainder sum 2) 0)
+         1 ; това е така защото не преброяваме два пъти при четно число и трябва да
+           ; добавим едно че после да разделим накрая
+         0
+         )
+     (quotient (accumulate +
+              0
+              a
+              b
+              (lambda (x)
+                (if (in-range? (- sum x) a b )
+                  1
+                  0
+                  ))
+              (lambda (x) (+ x 1))
+              ) 2))
+  )
   
 
 
