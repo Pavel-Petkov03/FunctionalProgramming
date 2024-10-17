@@ -20,6 +20,8 @@
   )
 
 
+
+
 (define (count-devisors n)
   (define (count-devisors-iter n current accumulator)
     (if (= current 0)
@@ -74,7 +76,7 @@
   )
 (define (increasing-digits-wrapper number current-max-digit)
   (cond
-    ((<= current-max-digit (remainder number 10)) #f)
+    ((< current-max-digit (remainder number 10)) #f)
     ((= number 0) #t)
     (else 
      (increasing-digits-wrapper (quotient number 10) (remainder number 10)))
