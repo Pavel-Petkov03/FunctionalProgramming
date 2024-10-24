@@ -122,9 +122,9 @@
   (foldr (lambda (x r) (cons (func x) r))'() l)
   )
 
-(define (filter-with-foldr l func)
+(define (filter-with-foldr l pred?)
   (foldr (lambda (x r)
-           ()
+           (if (pred? x) (cons x r) r)
            )
          '()
          l
@@ -132,4 +132,15 @@
   )
 
 
+(define (foldl op nv l)
+  (if (null? l) nv
+      (foldl op (op nv (car l)) (cdr l))
+      )
+  )
 
+(define (umen-reverse l)'; това вече е 0(n)
+  (foldl (lambda (x y) (cons y x)) '() l)
+  )
+
+;; имплементацията на foldl в racket e iter foldr
+;; ако искаме да правим reverse алгоритми на листи ще изпозлваме foldl(нашия не на racket)
