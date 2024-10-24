@@ -38,3 +38,78 @@
   )
 
 
+(define (list-tail ls n); приемаме че ако ни прецакат и вкарат по - голямо число от
+                          ; дължината на списъка ще хвърли грешка
+  (if (= n 0) ls
+      (list-tail (cdr ls) (- n 1))
+      )
+  )
+
+(define (list-ref ls index)
+  (if (= index 0) (car ls)
+      (list-ref (cdr ls) (- index 1))
+      )
+  )
+
+(define (member* pred? ls element)
+  (cond [(null? ls) #f]
+        [(pred? (car ls) element) ls]
+        [else
+         (member* pred? (cdr ls) element)
+         ]
+      
+      )
+  ); Конструктивен предикат -> предикат който връща false ако
+                            ; липсва element но остатък от масива ако е true
+                             ; and е конструктивен предикат , защото (and #t 5) -> 5
+(define (member ls element)
+  (member* equal? ls element)
+  )
+(define (memq ls element)
+  (member* eq? ls element)
+  )
+(define (memv ls element)
+  (member* eqv? ls element)
+  )
+
+; сега е момента да споменем разликата между equal? eqv? eq?
+; equal? deep search(най - safe ама и най - бавно защото рекурсивно проверява по дървото)
+; eq? проверява адресите на член данните
+; eqv? проверява адресите на член данните плюс стойностите
+
+
+(define (from-to a b); правя го inclusive
+  (if (> a b) '()
+      (cons a (from-to (+ a 1) b))
+      )
+  )
+
+(define (collect a b next)
+  (if (> a b) '()
+      (cons a (collect (next a) b))
+      )
+  )
+; racket имплементира map filter foldr foldl
+; foldl не е ляво асоциативно затова си пиша сам foldl
+; за да правя reverse алгоритмите по - лесно
+
+(define (map ls func)
+  (if (null? ls) ls
+      (cons (func (car ls)) (map (cdr ls) func))
+      )
+  )
+
+(define (filter ls pred?)
+  (cond
+    [(null? ls) ls]
+    [(pred? (car ls)) (cons (car ls) (filter (cdr ls) pred?))]
+    [else
+     (filter (cdr ls) pred?)
+     ]
+    )
+  )
+
+(define (foldr))
+
+
+
