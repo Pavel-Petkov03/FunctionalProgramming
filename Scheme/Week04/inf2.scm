@@ -13,18 +13,18 @@
   )
 
 (define (takeRight lst n) ; приемаме че хората са коректни и подават големината на масива
-  (if (= n 0)
+  (if (or (= n 0) (null? lst))
       lst
       (takeRight (cdr lst) (- n 1))
       )
   )
 
 (define (takeLeft lst n)
-  (if (= n 0)
-      '()
+  (if (or (= n 0) (null? lst))
+      lst
       (cons (car lst) (take (cdr lst) (- n 1)))
-      )
-  )
+      
+  ))
 
 (define (merge-sort lst n pred?)
   (if (<= n 1)
@@ -32,8 +32,8 @@
       (let*
           (
            {mid (quotient n 2)}
-           {leftArr (merge-sort (takeLeft lst mid) mid)}
-           {rightArr (merge-sort (takeRight lst (- n mid)) (- n mid))}
+           {leftArr (merge-sort (takeLeft lst mid) mid pred?)}
+           {rightArr (merge-sort (takeRight lst (- n mid)) (- n mid) pred?)}
            )
         (merge leftArr rightArr pred?)
       )
@@ -120,4 +120,40 @@
 
 
 
+(define (list-to-ordered-set ls)
+  (define (list-to-ordered-set-recurse ordered)
+    (cond
+      [(null? ordered) ordered]
+      [(and (not (null? (cdr ordered)))
+            (= (car ordered) (car (cdr ordered)))
+            )
+       (list-to-ordered-set-recurse (cdr ordered))
+       ]
+      [else
+       (cons (car ordered) (list-to-ordered-set-recurse (cdr ordered)))
+       ]
+      )
+    )
+  (list-to-ordered-set-recurse (merge-sort ls (length ls) <))
+  ); тази функция не е в задачите просто ми беше интересно колко бързо ще стане
 
+
+
+(define (kth-max-negative ls)
+    (lambda (x)
+       (list-ref (merge-sort ls (length ls) <) x)
+      )
+  )
+
+(define (from-to a b); правя го inclusive
+  (if (> a b) '()
+      (cons a (from-to (+ a 1) b))
+      )
+  )
+
+(define (prime-arr-gen num)
+  (filter (lambda (x) (= (remainder num x) 0 )) (from-to 2 (floor num)))
+  ); трябва да измлисля начин за lazy map като в python защото това прави 2n повторения
+
+(define (factorise num)
+  )
