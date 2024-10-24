@@ -109,7 +109,27 @@
     )
   )
 
-(define (foldr))
+(define (foldr op nv l) ; js -> reduce
+  (if (null? l)
+      nv
+      (op (car l) (foldr op nv (cdr l)))
+      )
+  )
+
+;можем да имплементираме map и filter с foldr
+
+(define (map-with-foldr l func)
+  (foldr (lambda (x r) (cons (func x) r))'() l)
+  )
+
+(define (filter-with-foldr l func)
+  (foldr (lambda (x r)
+           ()
+           )
+         '()
+         l
+         )
+  )
 
 
 
