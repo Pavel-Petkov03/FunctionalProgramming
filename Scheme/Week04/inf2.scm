@@ -156,4 +156,5 @@
   ); трябва да измлисля начин за lazy map като в python защото това прави 2n повторения
 
 (define (factorise num)
+  (foldr (reverse (from-to 2 (floor (sqrt num)))) 
   )
