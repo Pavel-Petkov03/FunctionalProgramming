@@ -155,6 +155,52 @@
   (filter (lambda (x) (= (remainder num x) 0 )) (from-to 2 (floor num)))
   ); трябва да измлисля начин за lazy map като в python защото това прави 2n повторения
 
-(define (factorise num)
-  (foldr (reverse (from-to 2 (floor (sqrt num)))) 
+; ще напишем алгоритъм за намиране на най - голяма нарастваща подредица
+; идеята ми е да мина един път масива и да върна в наредена двойка стартовия индекс
+; на най - дългата редица и нехната дължина
+
+
+
+(define (longest-inc-arr ls)
+  (define (iter ls max max-index i len)
+    (cond
+      [(null? ls) (if (< max len) (cons (- i max) len) (cons max-index max))]
+      [(and (not (null? (cdr ls))) (< (car ls) (cadr ls))) (iter (cdr ls) max max-index (+ i 1) (+ len 1))]
+      [(< max len) (iter (cdr ls) len (- i len) (+ i 1) 1)]
+      [else
+       (iter (cdr ls) max max-index (+ i 1) 1)
+       ]
+      )
+    )
+  (iter ls 1 0 1 1)
   )
+
+(define (sub-arr a b l)
+  (define (iter i j ls)
+    (cond
+      [(< i a) (iter (+ 1 i) j (cdr ls))]
+      [(or (null? ls) (> i j)) '()]
+      [else
+        (cons (car ls) (iter (+ 1 i) j (cdr ls)))
+       ]
+      )
+    )
+  (iter 0 b l)
+  )
+
+(define (longest-ascending-sub arr)
+  (let*
+      (
+      (index-len-pair (longest-inc-arr arr))
+      (start-index (car index-len-pair))
+      (length (cdr index-len-pair))
+      )
+    
+     (sub-arr start-index (- (+ start-index length ) 1) arr)
+     
+      )
+  )
+
+
+
+  

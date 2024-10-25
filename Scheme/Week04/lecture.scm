@@ -37,6 +37,14 @@
       )
   )
 
+(define (reverse3 l)
+  (define (iter ls list)
+    (if (null? list) ls
+        (iter (cons (car list) ls) (cdr list))
+        )
+    )
+  (iter '() l)
+  )
 
 (define (list-tail ls n); приемаме че ако ни прецакат и вкарат по - голямо число от
                           ; дължината на списъка ще хвърли грешка
@@ -139,7 +147,7 @@
   )
 
 (define (umen-reverse l)'; това вече е 0(n)
-  (foldl (lambda (x y) (cons y x)) '() l)
+  (foldl (lambda (x y ) (cons y x)) '() l)
   )
 
 ;; имплементацията на foldl в racket e iter foldr
