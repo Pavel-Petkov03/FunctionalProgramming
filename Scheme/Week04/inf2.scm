@@ -201,6 +201,18 @@
       )
   )
 
+(define (factorise n)
+  (define (rec current-n)
+    (cond
+      [(= n 1) '()]
+      [(= (remainder n current-n) 0)  (cons current-n (factorise (/ n current-n)))]
+      [else
+       (rec (+ 1 current-n))
+       ]
+      )
+    )
+  (rec 2)
+  )
 
 
   
