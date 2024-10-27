@@ -70,6 +70,35 @@
    ) xss)
   )
 
+(define  (all? pred? arr)
+  (cond
+    [(null? arr) #t]
+    [(not (pred? (car arr))) #f]
+    [else
+     (all? pred? (cdr arr))
+     ]
+  )); написах го защото мислех ,че ще ми трябва ама да стои
+
+(define (transpose xss)
+  (cond
+    [(null? (car xss)) '()]
+    [else
+        (cons (map (lambda (current-row) (car current-row)) xss)
+              (transpose
+               (map (lambda (current-row) (cdr  current-row)) xss)
+               )
+              )
+     ]
+    )
+  )
+
+(define (zero-cols xss)
+  (transpose (zero-rows (transpose xss))) ; dosta maloumno ama e krasivo ngl
+  )
+
+
+
+
 
 
 
