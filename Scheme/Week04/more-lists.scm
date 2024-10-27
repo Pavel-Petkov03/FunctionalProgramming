@@ -93,6 +93,24 @@
   (deep-del-recurse xs 1)
   )
 
+(define (shuffle xs)
+  (define (wrapper l r lrem?)
+    (cond
+      [(and (null? l) (null? r)) '()]
+      [lrem? (cons (car l) (wrapper (cdr l) r (not lrem?)))]
+      [else
+       (cons (car r) (wrapper l (cdr r) (not lrem?)))
+       ]
+      )
+    )
+  (let
+      (
+      (half-len (/ (length xs) 2)))
+    (wrapper (take xs half-len) (drop xs half-len) #t)
+    
+      )
+  )
+
 
     
     
