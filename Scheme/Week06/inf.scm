@@ -134,5 +134,120 @@
      ]
     )
     )
+(define (at-level level tr)
+  (define (iter current-level current-tr)
+    (cond
+      [(empty-tree? current-tr) '()]
+      [(= current-level level) (list (root current-tr))]
+      [else
+       (append (iter (+ current-level 1) (left-tree current-tr))
+               (iter (+ 1 current-level) (right-tree current-tr))
+       )]
+      )
+    )
+   (iter 0 tr)
+    )
+
+(define (map-tree f tr)
+  (if (empty-tree? tr) tr
+      (make-tree (f (root tr))
+                 (map-tree f (left-tree tr))
+                 (map-tree f (right-tree tr))
+             
+       )
+   ))
+
+(define (filter-tree pred? tr)
+  (cond
+    [(empty-tree? tr) '()]
+    [(pred? (root tr))
+     (append (list (root tr))
+             (filter-tree pred? (left-tree tr))
+             (filter-tree pred? (right-tree tr)))
+             ]
+    [else
+     (append (filter-tree pred? (left-tree tr))
+             (filter-tree pred? (right-tree tr)))
+     ]
+    
+    )
+  )
+
+; в общи линии бинарните дървета са по - лесни от матриците
+
+(define our-cool-graph '((1 . (2 3))
+                         (2 . (3))
+                         (3 . (4 5))
+                         (4 . ())
+                         (5 . (2 4 6))
+                         (6 . (2))))
+; като гледам графа е просто асоциативен масив , който представя таблица за съседство
+; тоест ще използваме assoc-ref(взима value)
+
+
+(define (get-v graph)
+  (car (car graph))
+  )
+(define (get-v-links graph)
+  (cdr (car graph))
+  )
+
+(define (graph-ref vertex graph)
+  (cdr (assoc vertex graph))
+  )
+
+(define (edges graph)
+  (if (null? graph) '()
+      (append (map (lambda (x) (cons (get-v graph) x)) (get-v-links graph))
+              (edges (cdr graph))
+              )
+      )
+  )
+
+(define (filter-children graph pred? vertex)
+  (filter (lambda (x) (pred? x)) (graph-ref vertex graph))
+  )
+
+
+; относно задачата която е за махане на vertex
+; доколкото разбирам искат резултата да не е graph защото ако махнем среден връх
+; ще се раздели на поне два графа
+
+(define (remove-vertex graph vert)
+  (map
+   (lambda (ls) (filter (lambda (element)  (not (= element vert))) ls))
+   (filter (lambda (ls) (not (= (car ls) vert))) graph)
+   )
+  ); това е n^2 алгоритъм което е fine
+
+
+; защото сме готини ще построим конструктивен предикат който:
+; връща път ако намери
+; #f ако няма
+
+(define (cons#f l r)
+  (or r (cons l r))
+  )
+(define (path? graph v u)
+  (define (outer-rec outer-arr)
+    (define (recurse current-lookup-arr)
+    (cond
+      [(null? current-lookup-arr) #f]
+      [( = (car current-lookup-arr) u) (cons u '())]
+      [else
+       (cons#f
+        v
+        (path? graph (car current-lookup-arr) u) ;; мести текущата таблица
+        )
+       ]
+      )
+    )
+    (if (null? outer-arr)
+        #f
+        (recurse (cdr outer-arr))
+        )
+    )
+  (outer-rec (graph-ref v graph))
+  )
 
 
