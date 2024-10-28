@@ -225,29 +225,39 @@
 ; връща път ако намери
 ; #f ако няма
 
-(define (cons#f l r)
-  (or r (cons l r))
+(define (append#f v deep wide)
+  (cond
+    [deep (append (list v) deep)]
+    [wide (append (list v) wide)]
+    [else #f]
+    )
   )
-(define (path? graph v u)
-  (define (outer-rec outer-arr)
-    (define (recurse current-lookup-arr)
+
+
+(define (path graph v u)
+    (define (recurse graph v current-lookup-arr trev)
     (cond
+      [(member v trev) #f]
       [(null? current-lookup-arr) #f]
-      [( = (car current-lookup-arr) u) (cons u '())]
+      [( = (car current-lookup-arr) u) (cons v (cons u '()))]
       [else
-       (cons#f
+       (append#f
         v
-        (path? graph (car current-lookup-arr) u) ;; мести текущата таблица
+        (path? (car current-lookup-arr) (graph-ref (car current-lookup-arr) graph) (cons v trev)) ;; deep lookup
         )
        ]
       )
     )
-    (if (null? outer-arr)
-        #f
-        (recurse (cdr outer-arr))
-        )
-    )
-  (outer-rec (graph-ref v graph))
-  )
+   (recurse v (graph-ref v graph) trev) )
+
+; осъзнах че щом се решава с обхождане в широчина и дълбочина значи може
+; да се направи биективна функция която мапва graph във deep list и да се обхожда аналогично
+
+
+
+(define (path graph v u) (path? graph v u '()))
+
+
+
 
 
