@@ -70,12 +70,34 @@
         )
      
      (and (or (= difference 1) (= difference 0))
-          (is-balanced (left-tree tr))
-          (is-balanced (right-tree tr))
+          (balanced? (left-tree tr))
+          (balanced? (right-tree tr))
           )
        )
    )
   )
+
+(define (perfectly-balanced? tr)
+  (or
+   (empty-tree? tr)
+   (let
+       ((difference (abs (- (size (left-tree tr))
+                        (size (right-tree tr))
+                        ))
+                    )
+        )
+     
+     (and (or (= difference 1) (= difference 0))
+          (perfectly-balanced? (left-tree tr))
+          (perfectly-balanced? (right-tree tr))
+          )
+       )
+   )
+  )
+
+;; може да се напише balanced която да приема предикат и да спестим малко писане
+;; но истината е , че изглежда още по - трагично
+;; така че го оставяме така ;(
 
 
 
