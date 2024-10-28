@@ -100,4 +100,39 @@
 ;; така че го оставяме така ;(
 
 
+(define (get-max-from-pred a b c pred?)
+  (cond
+    [(and (pred? a b) (pred? a c)) a]
+    [(and (pred? b a) (pred? b c) b)]
+    [else
+     c
+     ]
+    )
+  )
+
+
+(define (min-tr pred? tr)
+  (if (is-leaf? tr) (root tr)
+          (get-max-from-pred (min-tr pred? (left-tree tr))
+                             (min-tr pred? (right-tree tr))
+                             (root tr)
+                             pred?
+                             )
+          
+      )
+    )
+
+; няма да пиша max защото е същото с обърнат предикат
+
+
+(define (leaves tr)
+  (cond
+    [(empty-tree? tr) '()]
+    [(is-leaf? tr) (list (root tr))]
+    [else
+     (append (leaves (left-tree tr)) (leaves (right-tree tr)))
+     ]
+    )
+    )
+
 
