@@ -76,7 +76,7 @@
     [(not (pred? (car arr))) #f]
     [else
      (all? pred? (cdr arr))
-     ]
+     ] 
   )); написах го защото мислех ,че ще ми трябва ама да стои
 
 (define (transpose xss)
