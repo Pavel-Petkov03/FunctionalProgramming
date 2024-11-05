@@ -225,39 +225,47 @@
 ; връща път ако намери
 ; #f ако няма
 
-(define (append#f v deep wide)
-  (cond
-    [deep (append (list v) deep)]
-    [wide (append (list v) wide)]
-    [else #f]
-    )
+
+
+
+(define (del-assoc graph v)
+  (filter (lambda (cur)
+            (not (= (car cur) v))
+            )
+          graph
+          )
   )
 
 
 (define (path graph v u)
-    (define (recurse graph v current-lookup-arr trev)
+  (define (loop neighbors)               
     (cond
-      [(member v trev) #f]
-      [(null? current-lookup-arr) #f]
-      [( = (car current-lookup-arr) u) (cons v (cons u '()))]
+      [(null? neighbors) #f]              
       [else
-       (append#f
-        v
-        (path? (car current-lookup-arr) (graph-ref (car current-lookup-arr) graph) (cons v trev)) ;; deep lookup
-        )
-       ]
-      )
-    )
-   (recurse v (graph-ref v graph) trev) )
+       (let ((subpath (path (del-assoc graph v) (car neighbors) u)))
+         (if subpath
+             (cons v subpath)            
+             (loop (cdr neighbors))))    
+       ]))
 
-; осъзнах че щом се решава с обхождане в широчина и дълбочина значи може
-; да се направи биективна функция която мапва graph във deep list и да се обхожда аналогично
+  (cond
+    [(= u v) (list u)]                     
+    [(not (assoc v graph)) #f]             
+    [else (loop (graph-ref v graph))]))    
+      
 
+(define (all-paths graph v u)
+  (define (find-paths neighbors)
+    (cond
+      [(null? neighbors) '()]
+      [else
+       (let ((subpaths (all-paths (del-assoc graph v) (car neighbors) u)))
+         (append (map (lambda (path) (cons v path)) subpaths)
+                 (find-paths (cdr neighbors))))]))
 
-
-(define (path graph v u) (path? graph v u '()))
-
-
-
+  (cond
+    [(= u v) (list (list u))]
+    [(not (assoc v graph)) '()]
+    [else (find-paths (graph-ref v graph))]))
 
 

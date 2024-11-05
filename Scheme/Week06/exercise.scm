@@ -326,6 +326,23 @@
     )
   )
 
+(define (add-path-to-graph graph edge)
+  (foldr (lambda (x alist)
+           (if (= (car x) (car edge))
+               (cons (append x (cdr edge)) alist)
+               (cons x alist)
+               )
+           )'() graph)
+  )
+
+(define (adjacency-list nodes edges)
+  (foldr (lambda (p graph)
+           (add-path-to-graph graph p)
+           )
+         (foldr (lambda (x res) (add-assoc res x '())) '() nodes)
+         edges
+         )
+  )
 
 
 
