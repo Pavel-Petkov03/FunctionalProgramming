@@ -261,11 +261,14 @@
       [else
        (let ((subpaths (all-paths (del-assoc graph v) (car neighbors) u)))
          (append (map (lambda (path) (cons v path)) subpaths)
-                 (find-paths (cdr neighbors))))]))
+                 (find-paths (cdr neighbors))))])) ; рекурсия в широчина
 
   (cond
     [(= u v) (list (list u))]
     [(not (assoc v graph)) '()]
-    [else (find-paths (graph-ref v graph))]))
+    [else (find-paths (graph-ref v graph))])) ; рекурсия в дълбочина
 
-
+; това може да се направи и с една функция вместо с рекурсия между две функции
+; обаче трябва освен че трябва да използвам del-assoc трябва също да направя функция която по връх
+; маха първото ребро в асоциативния списък;
+;така че май това решение се води по оптимално
