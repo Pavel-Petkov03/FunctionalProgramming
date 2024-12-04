@@ -173,7 +173,7 @@ primes :: [Int]
 primes = sieve [2..]
     where
         sieve :: [Int] -> [Int]
-        sieve (x:xs) = x : sieve (filter (\t -> t `mod` x /= 0) xs)
+        sieve (x:xs) = x : sieve (filter (\y -> y `mod` x /= 0) xs)
 
 -- >>> take 10 primes
 -- [2,3,5,7,11,13,17,19,23,29]
