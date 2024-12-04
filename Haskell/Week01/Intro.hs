@@ -1,61 +1,44 @@
--- {{{ Pragmas
+hypothenuse :: Double -> Double -> Double
+hypothenuse a b = sqrt (a**2 + b**2)
+square :: Int -> Int
+square x = x * x
 
--- NOTE: read up more here - https://wiki.haskell.org/Language_Pragmas
+-- >>> hypothenuse 4 4
+-- 5.656854249492381
 
--- cover all cases!
-{-# OPTIONS_GHC -fwarn-incomplete-patterns #-}
--- warn about incomplete patterns v2
-{-# OPTIONS_GHC -fwarn-incomplete-uni-patterns #-}
--- write all your toplevel signatures!
-{-# OPTIONS_GHC -fwarn-missing-signatures #-}
--- use different names!
-{-# OPTIONS_GHC -fwarn-name-shadowing #-}
--- use all your pattern matches!
-{-# OPTIONS_GHC -fwarn-unused-matches #-}
+twice :: (t -> t) -> t -> t
+twice f x = f (f x)
+diag :: (t -> t -> t) -> t -> t
+diag f x = f x x
+-- >>> twice square 5
+-- 625
 
-{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
-import Graphics.Win32 (equalRgn)
--- disable some hints that spoil the easy tasks
-{-# HLINT ignore "Use even" #-}
+-- mod 13 5
+-- >>> 13 `mod` 5
+-- 3
 
--- }}}
+fact :: Int -> Int
+fact x
+    | x >0 = x * fact (x - 1)
+    | x == 0 = 1
+    | otherwise = error "Error is generated"
 
-
-fact :: Integer -> Integer
-fact 0 = 1
-fact n = n * fact (n - 1)
-
-
-
-data RPS = Rock | Paper | Scissors
-  deriving (Show)
-beats :: RPS -> RPS -> Bool
-beats = undefined
+-- >>>fact (5)
+-- 120
 
 
-data Point = MyPoint Integer Integer
-    deriving (Show)
+(!=) :: Eq a => a -> a -> Bool
+(!=) x y = x /= y
 
-defaultPoint :: Point
-defaultPoint = MyPoint 0 0
+-- EQ e type constaint  for a to have == and /= 
 
-
-next :: RPS -> RPS
-next Rock = Paper
-next Paper = Scissors
-next Scissors = Rock
-
-describeTuple :: (RPS, RPS) -> Bool
-describeTuple pair = case pair of
-    (Scissors, Scissors) -> True
-    (Rock , Rock) -> True
-    (Paper , Paper) -> True
-    _ -> False
+-- >>> 6 != 6
+-- False
 
 
+pow2 :: Int -> Int
+pow2 0 = 1
+pow2 n  = 2 * pow2 (n - 1)
 
- 
-
-
-
-
+-- >>> pow2 7
+-- 128
