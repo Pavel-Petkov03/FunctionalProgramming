@@ -119,8 +119,8 @@ interleave [] ys = ys
 interleave xs [] = xs
 interleave (x:xs) (y:ys) = x : y : interleave xs ys
 
--- >>> interleave [1,2,1] [4,5,6,3,4]
--- [1,4,2,5,1,6,3,4]
+-- >>> interleave [1,2,1, 4] [4,5,6,3,4]
+-- [1,4,2,5,1,6,4,3,4]
 
 nats :: [Int]
 nats = generate 1
@@ -177,3 +177,4 @@ primes = sieve [2..]
 
 -- >>> take 10 primes
 -- [2,3,5,7,11,13,17,19,23,29]
+

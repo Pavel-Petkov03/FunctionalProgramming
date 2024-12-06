@@ -1,6 +1,6 @@
 import Data.Char
 whisper :: String -> String
-whisper str = map toUpper str
+whisper = map toUpper
 -- >>> whisper "banana"
 -- "BANANA"
 
@@ -45,10 +45,10 @@ joinWords ch (x:xs) = foldr (\y acc -> y ++ [ch] ++ acc) x xs
 
 indices :: (Eq a) => a -> [a] -> [Int]
 indices elem xs = extractResult elem xs 0
-    where 
+    where
         extractResult :: (Eq a) => a -> [a] -> Int -> [Int]
         extractResult _ [] _ = []
-        extractResult elem (x:xs) index = 
+        extractResult elem (x:xs) index =
             if elem /= x then extractResult elem xs (index + 1)
             else index : extractResult elem xs (index + 1)
 
@@ -73,7 +73,7 @@ lastIndex elem xs =
 -- No index found
 
 countMin :: [Int] -> Int
-countMin xs = 
+countMin xs =
     let min = minimum xs
     in length (filter (== min) xs)
 
@@ -84,12 +84,12 @@ countMin xs =
 
 
 dedup :: (Eq a) =>  [a] -> [a]
-dedup xs = 
+dedup xs =
     dedupRecurse xs []
-    where 
+    where
         dedupRecurse :: (Eq a) =>  [a] -> [a] -> [a]
         dedupRecurse [] ys = ys
-        dedupRecurse (x:xs) ys = 
+        dedupRecurse (x:xs) ys =
             if x `elem` ys then dedupRecurse xs ys
             else dedupRecurse xs (ys ++ [x])
 
@@ -112,14 +112,14 @@ mergeSort :: (Ord a) => [a] -> [a]
 mergeSort [x] = [x]
 mergeSort xs =
     merge leftPart rightPart
-    where 
-        middle = div (length xs) 2
+    where
+        middle = length xs `div` 2
         leftPart =  mergeSort (take middle xs)
         rightPart =  mergeSort (drop middle xs)
 
 
--- >>> mergeSort [2, 1, 3, 7, -16, 5]
--- [-16,1,2,3,5,7]
+-- >>> mergeSort [2, 1, 3, 7, -16, 5, -33]
+-- [-33,-16,1,2,3,5,7]
 
 
 subsets :: [a] -> [[a]]
@@ -160,9 +160,9 @@ compose fs x = foldr (\f x -> f x) x fs
 
 facts :: [Int]
 facts = generateFacts 1 1
-    where 
+    where
         generateFacts :: Int -> Int -> [Int]
-        generateFacts prev n = 
+        generateFacts prev n =
             (prev * n) : generateFacts  (prev * n) (n + 1)
 
 
@@ -173,5 +173,7 @@ facts = generateFacts 1 1
 points :: [(Int , Int)]
 points = [ (x, z - x) | z <- [0..], x <- [0..z] ]
 
+
 -- >>> take 10 points
 -- [(0,0),(0,1),(1,0),(0,2),(1,1),(2,0),(0,3),(1,2),(2,1),(3,0)]
+
