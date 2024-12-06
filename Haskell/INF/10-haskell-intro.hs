@@ -41,7 +41,7 @@ multiplyByTwo x = x * 2
 -- >>> composeInt addOne multiplyByTwo 2
 -- 5
 
-compose :: (a -> b) -> (b -> c) -> (a -> c)
+compose :: (b -> c) -> (a -> b) -> (a -> c)
 compose f g = \x -> f (g x)
 
 myConcant :: [a] -> [a] -> [a]

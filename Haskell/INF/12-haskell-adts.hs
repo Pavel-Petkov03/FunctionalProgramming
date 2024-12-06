@@ -86,9 +86,9 @@ lfilter pred (Cons a ls) =
 ls :: List Int
 ls = Cons 1 ( Cons 2 Empty)
 -- >>> lmap (+1) ls
--- Cons 2 (Cons 3 Empty)
+-- List(2,3)
 -- >>> lfilter (>1) ls
--- Cons 2 Empty
+-- List(2)
 
 
 lfoldr :: (b -> a -> b) -> List a -> b -> b
