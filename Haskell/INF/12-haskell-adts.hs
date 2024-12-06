@@ -114,7 +114,6 @@ instance Show a => Show (List a) where
 data BinaryTree a
     = EmptyTree
     | Node a (BinaryTree a) (BinaryTree a)  
-    deriving (Show)
 
 height :: BinaryTree a -> Int
 height EmptyTree = 0
@@ -145,3 +144,58 @@ exampleUnbalancedTree = Node 10
 -- True
 -- >>> isBalanced exampleUnbalancedTree
 -- False
+
+
+babaTree :: BinaryTree String 
+babaTree = generateBabaTree ""
+    where 
+        generateBabaTree  :: String -> BinaryTree String
+        generateBabaTree str = Node str (generateBabaTree (str ++ "a")) (generateBabaTree (str ++ "b"))
+
+trimBinTree :: Integer -> BinaryTree a -> BinaryTree a
+trimBinTree 0 _ = EmptyTree
+trimBinTree n EmptyTree = EmptyTree
+trimBinTree n (Node val left right) = Node val (trimBinTree (n-1) left) (trimBinTree (n-1) right)
+
+
+-- >>> trimBinTree 5 babaTree
+-- ""
+--     "a"
+--         "aa"
+--             "aaa"
+--                 "aaaa"
+--                 "aaab"
+--             "aab"
+--                 "aaba"
+--                 "aabb"
+--         "ab"
+--             "aba"
+--                 "abaa"
+--                 "abab"
+--             "abb"
+--                 "abba"
+--                 "abbb"
+--     "b"
+--         "ba"
+--             "baa"
+--                 "baaa"
+--                 "baab"
+--             "bab"
+--                 "baba"
+--                 "babb"
+--         "bb"
+--             "bba"
+--                 "bbaa"
+--                 "bbab"
+--             "bbb"
+--                 "bbba"
+--                 "bbbb"
+instance Show a => Show (BinaryTree a) where
+    show tree = showTree tree 0
+      where
+        showTree :: Show a => BinaryTree a -> Int -> String
+        showTree EmptyTree _ = ""
+        showTree (Node val left right) level =
+            replicate (level * 4) ' ' ++ show val ++ "\n" ++
+            showTree left (level + 1) ++
+            showTree right (level + 1)
