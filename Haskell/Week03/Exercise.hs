@@ -177,3 +177,40 @@ points = [ (x, z - x) | z <- [0..], x <- [0..z] ]
 -- >>> take 10 points
 -- [(0,0),(0,1),(1,0),(0,2),(1,1),(2,0),(0,3),(1,2),(2,1),(3,0)]
 
+
+
+ones :: [Int]
+ones = 1 : ones
+
+twos :: [Int]
+twos = 2 : twos
+
+threes :: [Int]
+threes = 3 : threes
+
+braidStreams :: [a] -> [a] -> [a] -> ([a], [a], [a])
+braidStreams (a:as) (b:bs) (c:cs) = 
+    let (newAs, newBs, newCs) = braidStreamsRecurse as bs cs 1
+    in (a : newAs, b : newBs, c : newCs)
+  where
+    braidStreamsRecurse :: [a] -> [a] -> [a] -> Integer -> ([a], [a], [a])
+    braidStreamsRecurse (a:as) (b:bs) (c:cs) current
+        | odd current = 
+            let (nextA, nextB, nextC) = braidStreamsRecurse bs as cs (current + 1)
+            in (b : nextA, a : nextB, c : nextC)
+        | otherwise = 
+            let (nextA, nextB, nextC) = braidStreamsRecurse as cs bs (current + 1)
+            in (a : nextA, c : nextB, b : nextC)
+
+x :: [Int]
+z :: [Int]
+y :: [Int]
+(x, y ,z) = braidStreams ones twos threes
+-- >>> take 100 x
+-- >>> take 10 y
+-- >>> take 10 z
+-- [1,2,2,3,3,1,1,2,2,3]
+-- [2,1,3,2,1,3,2,1,3,2]
+-- [3,3,1,1,2,2,3,3,1,1]
+
+
