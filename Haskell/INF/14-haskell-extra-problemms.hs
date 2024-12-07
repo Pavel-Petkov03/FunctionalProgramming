@@ -137,6 +137,6 @@ differentiate var (Mul e1 e2) =
 differentiate var (Div e1 e2) = 
     Div (Sub (Mul (differentiate var e1) e2) (Mul e1 (differentiate var e2))) (Mul e2 e2) 
 
--- >>> differentiate "x" example1
--- Add (Const 0.0) (Const 1.0)
--- не ми се пише pow, защото трябва да пиша log (d/dx a^y = a^y * lna *d/dx y)
+-- >>> differentiate "x" example2
+-- Add (Mul (Const 0.0) (Sub (Var "x") (Const 4.0))) (Mul (Var "y") (Sub (Const 1.0) (Const 0.0)))
+
