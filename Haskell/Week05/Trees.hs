@@ -40,7 +40,7 @@ level (Node x l r) n = level l (n - 1) ++ level r (n - 1)
 exampleTree :: Tree Int
 exampleTree = Node 1
                (Node 2 Empty Empty)
-               (Node 3 (Node 4 Empty Empty) Empty)
+               (Node 3 (Node 0 Empty Empty) Empty)
 
 prune :: Tree a -> Tree a
 prune (Node x Empty Empty) = Empty
