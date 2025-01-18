@@ -76,8 +76,7 @@ trimBinTree 0 _ = EmptyTree
 trimBinTree n EmptyTree = EmptyTree
 trimBinTree n (Node val left right) = Node val (trimBinTree (n-1) left) (trimBinTree (n-1) right)
 
-
--- >>> trimBinTree 6 babaTree
+-- >>> trimBinTree 10 babaTree
 -- ""
 --     "a"
 --         "aa"
@@ -143,6 +142,7 @@ trimBinTree n (Node val left right) = Node val (trimBinTree (n-1) left) (trimBin
 --                     "bbbbb"
 
 instance Show a => Show (BinaryTree a) where
+    show :: Show a => BinaryTree a -> String
     show tree = showTree tree 0
       where
         showTree :: Show a => BinaryTree a -> Int -> String

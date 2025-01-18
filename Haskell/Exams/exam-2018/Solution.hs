@@ -21,8 +21,8 @@ generatePowers k t = customNub $  1 : generatePowersRecurse [k^x | x <- [1..]] [
 
 
 
--- >>> take 10 (generatePowers 2 3)
--- [1,2,3,4,6,8,9,12,16,18]
+-- >>> take 15 (generatePowers 2 6)
+-- [1,2,4,6,8,12,16,24,32,36,48,64,72,96,128]
 
 -- когато сортираме безкрайни потоци merge е доста адекватен вариант ngl
 
